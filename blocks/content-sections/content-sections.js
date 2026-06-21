@@ -1,12 +1,14 @@
 import {
   blockFields,
   fieldText,
+  finalizeBlock,
   instrument,
   makeButton,
   makeEl,
   makeImage,
   rowValues,
   rows,
+  valuesHaveContent,
 } from '../../scripts/grace-utils.js';
 
 export default function decorate(block) {
@@ -14,7 +16,7 @@ export default function decorate(block) {
   const section = makeEl('section', 'grace-content-sections grace-section grace-scroll-block');
   instrument(block, section);
   const stack = makeEl('div', 'grace-container grace-content-sections__stack');
-  const entries = rows(block, ['heading']).filter((row) => row.children.length > 1);
+  const entries = rows(block, ['heading']).filter((row) => row.children.length > 1 && valuesHaveContent(rowValues(row)));
 
   entries.forEach((row) => {
     const values = rowValues(row);
@@ -38,5 +40,5 @@ export default function decorate(block) {
   }
 
   section.append(stack);
-  block.replaceWith(section);
+  finalizeBlock(block, section, 'Content Sections', Boolean(stack.children.length));
 }

@@ -2,6 +2,7 @@ import {
   blockFields,
   fieldLink,
   fieldText,
+  finalizeBlock,
   instrument,
   makeButton,
   makeEl,
@@ -29,5 +30,5 @@ export default function decorate(block) {
 
   inner.append(copy, proof);
   section.append(inner);
-  block.replaceWith(section);
+  finalizeBlock(block, section, 'Promo', Boolean(eyebrow || body || cta.label));
 }

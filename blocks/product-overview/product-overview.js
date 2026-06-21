@@ -1,5 +1,5 @@
 import {
-  blockFields, fieldHtml, fieldText, instrument, makeEl, rows,
+  blockFields, fieldHtml, fieldText, finalizeBlock, instrument, makeEl, rows,
 } from '../../scripts/grace-utils.js';
 
 export default function decorate(block) {
@@ -21,5 +21,5 @@ export default function decorate(block) {
   }
   inner.append(body);
   section.append(inner);
-  block.replaceWith(section);
+  finalizeBlock(block, section, 'Product Overview', Boolean(heading || body.children.length || body.textContent.trim()));
 }

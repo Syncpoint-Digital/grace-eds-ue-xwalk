@@ -1,5 +1,5 @@
 import {
-  blockFields, fieldText, instrument, makeEl, rowValues, rows,
+  blockFields, fieldText, finalizeBlock, instrument, makeEl, rowValues, rows, valuesHaveContent,
 } from '../../scripts/grace-utils.js';
 
 export default function decorate(block) {
@@ -10,6 +10,7 @@ export default function decorate(block) {
   const inner = makeEl('div', 'grace-container grace-page-nav__inner grace-section-nav__inner');
   rows(block, ['label']).forEach((row) => {
     const values = rowValues(row);
+    if (!valuesHaveContent(values)) return;
     const label = values[0]?.text;
     if (!label) return;
     const link = makeEl('a');
@@ -19,5 +20,5 @@ export default function decorate(block) {
     inner.append(link);
   });
   nav.append(inner);
-  block.replaceWith(nav);
+  finalizeBlock(block, nav, 'Section Nav', Boolean(inner.children.length));
 }

@@ -2,12 +2,14 @@ import {
   blockFields,
   fieldLink,
   fieldText,
+  finalizeBlock,
   instrument,
   makeButton,
   makeEl,
   makeImage,
   rowValues,
   rows,
+  valuesHaveContent,
 } from '../../scripts/grace-utils.js';
 
 function renderInsight(values, featured = false) {
@@ -38,7 +40,9 @@ export default function decorate(block) {
   const container = makeEl('div', 'grace-container');
   if (heading) container.append(makeEl('h2', '', heading));
   const layout = makeEl('div', 'grace-insights__layout');
-  const items = rows(block, ['heading', 'ctaLabel', 'ctaHref']).map(rowValues).filter((values) => values.length >= 3);
+  const items = rows(block, ['heading', 'ctaLabel', 'ctaHref'])
+    .map(rowValues)
+    .filter((values) => values.length >= 3 && valuesHaveContent(values));
   if (items[0]) layout.append(renderInsight(items[0], true));
   const list = makeEl('div', 'grace-insights__list');
   items.slice(1).forEach((values) => list.append(renderInsight(values)));
@@ -47,5 +51,5 @@ export default function decorate(block) {
   const button = makeButton(fieldLink(fields, ['ctaLabel'], ['ctaHref']));
   if (button) container.append(button);
   section.append(container);
-  block.replaceWith(section);
+  finalizeBlock(block, section, 'Insights', Boolean(heading || items.length || button));
 }

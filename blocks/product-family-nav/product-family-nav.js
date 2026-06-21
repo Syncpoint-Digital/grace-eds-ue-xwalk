@@ -1,5 +1,5 @@
 import {
-  instrument, makeEl, rowValues, rows,
+  finalizeBlock, instrument, makeEl, rowValues, rows, valuesHaveContent,
 } from '../../scripts/grace-utils.js';
 
 export default function decorate(block) {
@@ -9,6 +9,7 @@ export default function decorate(block) {
   const inner = makeEl('div', 'grace-container grace-page-nav__inner grace-product-nav__inner');
   rows(block).forEach((row) => {
     const values = rowValues(row);
+    if (!valuesHaveContent(values)) return;
     const label = values[0]?.text;
     if (!label) return;
     const link = makeEl('a');
@@ -18,5 +19,5 @@ export default function decorate(block) {
     inner.append(link);
   });
   nav.append(inner);
-  block.replaceWith(nav);
+  finalizeBlock(block, nav, 'Product Family Nav', Boolean(inner.children.length));
 }

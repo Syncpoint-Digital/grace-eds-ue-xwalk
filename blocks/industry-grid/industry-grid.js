@@ -2,12 +2,14 @@ import {
   blockFields,
   fieldLink,
   fieldText,
+  finalizeBlock,
   instrument,
   makeButton,
   makeEl,
   makeImage,
   rowValues,
   rows,
+  valuesHaveContent,
 } from '../../scripts/grace-utils.js';
 
 export default function decorate(block) {
@@ -21,7 +23,7 @@ export default function decorate(block) {
 
   rows(block, ['heading', 'ctaLabel', 'ctaHref']).forEach((row) => {
     const values = rowValues(row);
-    if (values.length < 2) return;
+    if (values.length < 2 || !valuesHaveContent(values)) return;
     const link = makeEl('a', 'grace-industry grace-reveal');
     link.href = values[2]?.link.href || values[2]?.text || '/industries/';
     const image = values.find((value) => value.image.src)?.image;
@@ -38,5 +40,5 @@ export default function decorate(block) {
   if (button) grid.append(button);
   layout.append(grid);
   section.append(layout);
-  block.replaceWith(section);
+  finalizeBlock(block, section, 'Industry Grid', Boolean(heading || grid.children.length));
 }

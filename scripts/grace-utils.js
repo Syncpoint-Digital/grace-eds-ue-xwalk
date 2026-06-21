@@ -45,7 +45,7 @@ export function findLink(element) {
   }
 
   return {
-    href: textContent(element) || '/',
+    href: textContent(element) || '',
     label: '',
   };
 }
@@ -127,6 +127,10 @@ export function rowValues(row) {
   }));
 }
 
+export function valuesHaveContent(values) {
+  return values.some((value) => value.text || value.image.src || value.link.href);
+}
+
 export function makeEl(tag, className, html = '') {
   const element = document.createElement(tag);
   if (className) element.className = className;
@@ -155,6 +159,46 @@ export function makeButton({ className = '', href = '', label = '' } = {}) {
 export function instrument(from, to) {
   if (from && to) moveInstrumentation(from, to);
   return to;
+}
+
+export function isEditorMode() {
+  try {
+    return window.location.hostname.includes('adobeaemcloud.com')
+      || window.location.search.includes('aue')
+      || window.self !== window.top;
+  } catch {
+    return false;
+  }
+}
+
+export function hasRenderedContent(element) {
+  if (!element) return false;
+  const clone = element.cloneNode(true);
+  clone.querySelectorAll('.grace-editor-placeholder, [aria-hidden="true"]').forEach((node) => node.remove());
+  return Boolean(
+    clone.textContent.trim()
+      || clone.querySelector('img[src], video, iframe, a[href], button:not([aria-hidden="true"])'),
+  );
+}
+
+export function finalizeBlock(block, replacement, label, hasContent = undefined) {
+  const contentExists = hasContent ?? hasRenderedContent(replacement);
+  if (contentExists) {
+    block.replaceWith(replacement);
+    return replacement;
+  }
+
+  if (isEditorMode()) {
+    const placeholder = makeEl('div', 'grace-editor-placeholder');
+    placeholder.textContent = `${label || 'Block'}: add content`;
+    replacement.classList.add('grace-block-empty');
+    replacement.replaceChildren(placeholder);
+    block.replaceWith(replacement);
+    return replacement;
+  }
+
+  block.remove();
+  return null;
 }
 
 export function getVideoEmbedUrl(url) {

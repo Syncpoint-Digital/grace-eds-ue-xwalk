@@ -2,6 +2,7 @@ import {
   blockFields,
   fieldImage,
   fieldText,
+  finalizeBlock,
   getVideoEmbedUrl,
   instrument,
   makeEl,
@@ -28,16 +29,19 @@ export default function decorate(block) {
     copy.insertAdjacentHTML('beforeend', `<button data-grace-video-open="${modalId}" data-grace-video-src="${embedUrl}" type="button">${label} <span aria-hidden="true">&rsaquo;</span></button>`);
   }
 
-  const imageButton = makeEl('button', 'grace-video__image');
-  imageButton.type = 'button';
-  imageButton.setAttribute('aria-label', `${label}: ${heading}`);
-  imageButton.setAttribute('data-grace-video-open', modalId);
-  imageButton.setAttribute('data-grace-video-src', embedUrl);
   const img = makeImage(image.src, image.alt);
-  if (img) imageButton.append(img);
-  if (embedUrl) imageButton.insertAdjacentHTML('beforeend', '<span aria-hidden="true" class="grace-video__play">&#9654;</span>');
+  if (img || embedUrl) {
+    const imageButton = makeEl('button', 'grace-video__image');
+    imageButton.type = 'button';
+    imageButton.setAttribute('aria-label', [label, heading].filter(Boolean).join(': '));
+    imageButton.setAttribute('data-grace-video-open', modalId);
+    imageButton.setAttribute('data-grace-video-src', embedUrl);
+    if (img) imageButton.append(img);
+    if (embedUrl) imageButton.insertAdjacentHTML('beforeend', '<span aria-hidden="true" class="grace-video__play">&#9654;</span>');
+    panel.append(imageButton);
+  }
 
-  panel.append(copy, imageButton);
+  if (copy.children.length) panel.prepend(copy);
   section.append(panel);
   if (embedUrl) {
     section.insertAdjacentHTML('beforeend', `
@@ -50,5 +54,5 @@ export default function decorate(block) {
     </div>
   `);
   }
-  block.replaceWith(section);
+  finalizeBlock(block, section, 'Video Feature', Boolean(eyebrow || heading || (label && embedUrl) || embedUrl || image.src));
 }

@@ -1,5 +1,5 @@
 import {
-  blockFields, fieldText, instrument, makeEl, rowValues, rows,
+  blockFields, fieldText, finalizeBlock, instrument, makeEl, rowValues, rows, valuesHaveContent,
 } from '../../scripts/grace-utils.js';
 
 export default function decorate(block) {
@@ -13,6 +13,7 @@ export default function decorate(block) {
   let currentYear;
   rows(block, ['heading']).forEach((row) => {
     const values = rowValues(row);
+    if (!valuesHaveContent(values)) return;
     if (/^\d{4}$/.test(values[0]?.text || '') || (values[0]?.text || '').toLowerCase() === 'year') {
       currentYear = makeEl('section', 'grace-awards__year grace-reveal');
       currentYear.append(makeEl('h3', '', values[1]?.text || values[0]?.text));
@@ -31,5 +32,5 @@ export default function decorate(block) {
   });
   container.append(years);
   section.append(container);
-  block.replaceWith(section);
+  finalizeBlock(block, section, 'Awards Archive', Boolean(heading || years.children.length));
 }

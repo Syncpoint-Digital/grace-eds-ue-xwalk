@@ -1,5 +1,13 @@
 import {
-  blockFields, fieldText, instrument, makeEl, makeImage, rowValues, rows,
+  blockFields,
+  fieldText,
+  finalizeBlock,
+  instrument,
+  makeEl,
+  makeImage,
+  rowValues,
+  rows,
+  valuesHaveContent,
 } from '../../scripts/grace-utils.js';
 
 export default function decorate(block) {
@@ -13,6 +21,7 @@ export default function decorate(block) {
   let currentEra;
   rows(block, ['heading']).forEach((row) => {
     const values = rowValues(row);
+    if (!valuesHaveContent(values)) return;
     if ((values[0]?.text || '').toLowerCase() === 'era' || values.length === 1) {
       currentEra = makeEl('section', 'grace-timeline__era');
       currentEra.append(makeEl('h3', '', values[1]?.text || values[0]?.text));
@@ -35,5 +44,5 @@ export default function decorate(block) {
   });
   container.append(eras);
   section.append(container);
-  block.replaceWith(section);
+  finalizeBlock(block, section, 'Timeline', Boolean(heading || eras.children.length));
 }

@@ -2,6 +2,7 @@ import {
   blockFields,
   fieldImage,
   fieldText,
+  finalizeBlock,
   instrument,
   makeEl,
 } from '../../scripts/grace-utils.js';
@@ -30,5 +31,5 @@ export default function decorate(block) {
       </div>
     </div>
   `;
-  block.replaceWith(section);
+  finalizeBlock(block, section, 'Product Hero', Boolean(image.src || heading || eyebrow || summary));
 }

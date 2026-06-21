@@ -1,5 +1,13 @@
 import {
-  blockFields, fieldText, instrument, makeEl, makeImage, rowValues, rows,
+  blockFields,
+  fieldText,
+  finalizeBlock,
+  instrument,
+  makeEl,
+  makeImage,
+  rowValues,
+  rows,
+  valuesHaveContent,
 } from '../../scripts/grace-utils.js';
 
 export default function decorate(block) {
@@ -12,6 +20,7 @@ export default function decorate(block) {
   const grid = makeEl('div', 'grace-locations__grid');
   rows(block, ['heading']).forEach((row) => {
     const values = rowValues(row);
+    if (!valuesHaveContent(values)) return;
     const location = makeEl('article', 'grace-location grace-reveal');
     const image = values.find((value) => value.image.src)?.image;
     const img = makeImage(image?.src, image?.alt);
@@ -26,5 +35,5 @@ export default function decorate(block) {
   });
   container.append(grid);
   section.append(container);
-  block.replaceWith(section);
+  finalizeBlock(block, section, 'Location Directory', Boolean(heading || grid.children.length));
 }

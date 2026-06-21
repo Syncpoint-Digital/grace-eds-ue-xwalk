@@ -1,11 +1,13 @@
 import {
   blockFields,
   fieldText,
+  finalizeBlock,
   instrument,
   makeEl,
   makeImage,
   rowValues,
   rows,
+  valuesHaveContent,
 } from '../../scripts/grace-utils.js';
 
 export default function decorate(block) {
@@ -20,7 +22,7 @@ export default function decorate(block) {
 
   authoredRows.forEach((row) => {
     const values = rowValues(row);
-    if (values.length < 2) return;
+    if (values.length < 2 || !valuesHaveContent(values)) return;
     const card = makeEl('a', 'grace-product grace-reveal');
     card.href = values[3]?.link.href || values[3]?.text || values[2]?.link.href || '/';
     const image = values.find((value) => value.image.src)?.image;
@@ -33,5 +35,5 @@ export default function decorate(block) {
 
   container.append(grid);
   section.append(container);
-  block.replaceWith(section);
+  finalizeBlock(block, section, 'Product Cards', Boolean(heading || grid.children.length));
 }

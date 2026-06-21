@@ -1,5 +1,5 @@
 import {
-  blockFields, fieldText, instrument, makeEl, rowValues, rows,
+  blockFields, fieldText, finalizeBlock, instrument, makeEl, rowValues, rows, valuesHaveContent,
 } from '../../scripts/grace-utils.js';
 
 export default function decorate(block) {
@@ -14,6 +14,7 @@ export default function decorate(block) {
 
   rows(block, ['heading']).forEach((row) => {
     const values = rowValues(row);
+    if (!valuesHaveContent(values)) return;
     const type = (values[0]?.text || '').toLowerCase();
     if (type === 'group' || values.length === 1) {
       currentGroup = makeEl('section', 'grace-product-links__group grace-reveal');
@@ -34,5 +35,5 @@ export default function decorate(block) {
 
   container.append(grid);
   section.append(container);
-  block.replaceWith(section);
+  finalizeBlock(block, section, 'Product Link List', Boolean(heading || grid.children.length));
 }

@@ -1,9 +1,11 @@
 import {
+  finalizeBlock,
   instrument,
   makeEl,
   makeImage,
   rowValues,
   rows,
+  valuesHaveContent,
 } from '../../scripts/grace-utils.js';
 
 export default function decorate(block) {
@@ -13,7 +15,7 @@ export default function decorate(block) {
 
   rows(block).forEach((row) => {
     const values = rowValues(row);
-    if (values.length < 2) return;
+    if (values.length < 2 || !valuesHaveContent(values)) return;
     const article = makeEl('article', 'grace-callout grace-reveal');
     const image = values.find((value) => value.image.src)?.image;
     const img = makeImage(image?.src, image?.alt);
@@ -27,5 +29,5 @@ export default function decorate(block) {
   });
 
   section.append(grid);
-  block.replaceWith(section);
+  finalizeBlock(block, section, 'Feature Callouts', Boolean(grid.children.length));
 }

@@ -3,6 +3,7 @@ import {
   fieldImage,
   fieldLink,
   fieldText,
+  finalizeBlock,
   instrument,
   makeButton,
   makeEl,
@@ -29,5 +30,5 @@ export default function decorate(block) {
   if (heading) content.append(makeEl('h1', '', heading));
   if (cta.label) content.append(makeButton(cta));
   section.append(content);
-  block.replaceWith(section);
+  finalizeBlock(block, section, 'Hero', Boolean(image.src || heading || cta.label));
 }

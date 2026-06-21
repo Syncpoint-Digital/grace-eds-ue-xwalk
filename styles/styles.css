@@ -113,6 +113,26 @@ main img {
   width: 100%;
 }
 
+.grace-editor-placeholder {
+  width: min(100% - 32px, 960px);
+  margin: 24px auto;
+  padding: 18px 20px;
+  border: 1px dashed var(--grace-line);
+  border-radius: var(--grace-radius-sm);
+  background: color-mix(in srgb, var(--grace-surface) 84%, var(--grace-white));
+  color: var(--grace-muted);
+  font: 600 15px/1.4 var(--grace-font-sans);
+  text-align: center;
+}
+
+.grace-block-empty {
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 0 !important;
+  background: transparent !important;
+  animation: none !important;
+}
+
 /* sections */
 main > .section {
   margin: 40px 0;
