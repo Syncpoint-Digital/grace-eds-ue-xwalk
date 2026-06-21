@@ -7,7 +7,8 @@ export default function decorate(block) {
   const section = makeEl('section', 'grace-locations grace-section grace-scroll-block');
   instrument(block, section);
   const container = makeEl('div', 'grace-container');
-  container.append(makeEl('h2', '', fieldText(fields, 'heading', 'Locations')));
+  const heading = fieldText(fields, 'heading');
+  if (heading) container.append(makeEl('h2', '', heading));
   const grid = makeEl('div', 'grace-locations__grid');
   rows(block, ['heading']).forEach((row) => {
     const values = rowValues(row);
@@ -16,10 +17,10 @@ export default function decorate(block) {
     const img = makeImage(image?.src, image?.alt);
     if (img) location.append(img);
     const copy = makeEl('div');
-    copy.append(makeEl('span', '', values[1]?.text || values[0]?.text || 'Grace location'));
-    copy.append(makeEl('h4', '', values[2]?.text || values[1]?.text || 'Location'));
-    copy.append(makeEl('p', '', values[3]?.text || ''));
-    copy.append(makeEl('strong', '', values[4]?.text || ''));
+    if (values[1]?.text || values[0]?.text) copy.append(makeEl('span', '', values[1]?.text || values[0]?.text));
+    if (values[2]?.text || values[1]?.text) copy.append(makeEl('h4', '', values[2]?.text || values[1]?.text));
+    if (values[3]?.text) copy.append(makeEl('p', '', values[3].text));
+    if (values[4]?.text) copy.append(makeEl('strong', '', values[4].text));
     location.append(copy);
     grid.append(location);
   });

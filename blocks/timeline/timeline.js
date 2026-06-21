@@ -7,7 +7,8 @@ export default function decorate(block) {
   const section = makeEl('section', 'grace-timeline grace-section grace-scroll-block');
   instrument(block, section);
   const container = makeEl('div', 'grace-container');
-  container.append(makeEl('h2', '', fieldText(fields, 'heading', 'Our History')));
+  const heading = fieldText(fields, 'heading');
+  if (heading) container.append(makeEl('h2', '', heading));
   const eras = makeEl('div', 'grace-timeline__eras');
   let currentEra;
   rows(block, ['heading']).forEach((row) => {
@@ -21,7 +22,6 @@ export default function decorate(block) {
     }
     if (!currentEra) {
       currentEra = makeEl('section', 'grace-timeline__era');
-      currentEra.append(makeEl('h3', '', 'Timeline'));
       currentEra.append(makeEl('div', 'grace-timeline__events'));
       eras.append(currentEra);
     }

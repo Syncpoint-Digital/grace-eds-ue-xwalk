@@ -7,7 +7,8 @@ export default function decorate(block) {
   const section = makeEl('section', 'grace-about-hub grace-section grace-scroll-block');
   instrument(block, section);
   const container = makeEl('div', 'grace-container');
-  container.append(makeEl('h2', '', fieldText(fields, 'heading', 'About Grace')));
+  const heading = fieldText(fields, 'heading');
+  if (heading) container.append(makeEl('h2', '', heading));
   const grid = makeEl('div', 'grace-about-hub__grid');
   rows(block, ['heading']).forEach((row) => {
     const values = rowValues(row);
@@ -17,7 +18,6 @@ export default function decorate(block) {
     const image = values.find((value) => value.image.src)?.image;
     const img = makeImage(image?.src, image?.alt);
     if (img) card.append(img);
-    card.append(makeEl('span', '', 'Promotion'));
     card.append(makeEl('h3', '', values[1]?.text || values[0]?.text));
     card.append(makeEl('p', '', values[2]?.text || ''));
     grid.append(card);

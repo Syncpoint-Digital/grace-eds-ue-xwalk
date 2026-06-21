@@ -7,7 +7,8 @@ export default function decorate(block) {
   const section = makeEl('section', 'grace-awards grace-section grace-scroll-block');
   instrument(block, section);
   const container = makeEl('div', 'grace-container');
-  container.append(makeEl('h2', '', fieldText(fields, 'heading', 'Awards and Recognition')));
+  const heading = fieldText(fields, 'heading');
+  if (heading) container.append(makeEl('h2', '', heading));
   const years = makeEl('div', 'grace-awards__years');
   let currentYear;
   rows(block, ['heading']).forEach((row) => {
@@ -21,7 +22,6 @@ export default function decorate(block) {
     }
     if (!currentYear) {
       currentYear = makeEl('section', 'grace-awards__year grace-reveal');
-      currentYear.append(makeEl('h3', '', 'Awards'));
       currentYear.append(makeEl('ul'));
       years.append(currentYear);
     }

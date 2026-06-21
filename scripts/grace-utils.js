@@ -103,8 +103,8 @@ export function fieldLink(fields, labelNames, hrefNames, fallback = {}) {
   const authoredLink = linkedField ? findLink(linkedField) : {};
 
   return {
-    href: href || authoredLink.href || fallback.href || '/',
-    label: label || authoredLink.label || fallback.label || 'Learn more',
+    href: href || authoredLink.href || fallback.href || '',
+    label: label || authoredLink.label || fallback.label || '',
   };
 }
 
@@ -143,11 +143,12 @@ export function makeImage(src, alt = '') {
   return img;
 }
 
-export function makeButton({ className = '', href = '/', label = 'Learn more' } = {}) {
+export function makeButton({ className = '', href = '', label = '' } = {}) {
+  if (!label) return null;
   const link = document.createElement('a');
   link.className = `grace-button ${className}`.trim();
   link.href = href || '/';
-  link.innerHTML = `${label || 'Learn more'} <span aria-hidden="true">${arrow}</span>`;
+  link.innerHTML = `${label} <span aria-hidden="true">${arrow}</span>`;
   return link;
 }
 

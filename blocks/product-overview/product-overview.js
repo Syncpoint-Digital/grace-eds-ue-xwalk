@@ -7,7 +7,8 @@ export default function decorate(block) {
   const section = makeEl('section', 'grace-product-overview grace-section grace-scroll-block');
   instrument(block, section);
   const inner = makeEl('div', 'grace-container grace-product-overview__inner');
-  inner.append(makeEl('h2', '', fieldText(fields, 'heading', 'Overview')));
+  const heading = fieldText(fields, 'heading');
+  if (heading) inner.append(makeEl('h2', '', heading));
   const body = makeEl('div');
   const authored = fieldHtml(fields, ['body', 'description', 'paragraphs']);
   if (authored) {

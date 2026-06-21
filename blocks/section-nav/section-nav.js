@@ -6,7 +6,7 @@ export default function decorate(block) {
   const fields = blockFields(block);
   const nav = makeEl('nav', 'grace-page-nav grace-section-nav');
   instrument(block, nav);
-  nav.setAttribute('aria-label', fieldText(fields, 'label', 'Section navigation'));
+  nav.setAttribute('aria-label', fieldText(fields, 'label') || 'Page navigation');
   const inner = makeEl('div', 'grace-container grace-page-nav__inner grace-section-nav__inner');
   rows(block, ['label']).forEach((row) => {
     const values = rowValues(row);

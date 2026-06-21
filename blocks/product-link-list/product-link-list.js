@@ -7,7 +7,8 @@ export default function decorate(block) {
   const section = makeEl('section', 'grace-product-links grace-section grace-scroll-block');
   instrument(block, section);
   const container = makeEl('div', 'grace-container');
-  container.append(makeEl('h2', '', fieldText(fields, 'heading', 'Explore products')));
+  const heading = fieldText(fields, 'heading');
+  if (heading) container.append(makeEl('h2', '', heading));
   const grid = makeEl('div', 'grace-product-links__grid');
   let currentGroup;
 
@@ -23,7 +24,6 @@ export default function decorate(block) {
     }
     if (!currentGroup) {
       currentGroup = makeEl('section', 'grace-product-links__group grace-reveal');
-      currentGroup.append(makeEl('h3', '', 'Products'));
       currentGroup.append(makeEl('ul'));
       grid.append(currentGroup);
     }

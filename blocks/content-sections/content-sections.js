@@ -31,7 +31,7 @@ export default function decorate(block) {
     stack.append(article);
   });
 
-  if (!entries.length) {
+  if (!entries.length && (fieldText(fields, 'heading') || fieldText(fields, ['body', 'description']))) {
     const article = makeEl('article', 'grace-content-section grace-reveal');
     article.append(makeEl('div', '', `<h2>${fieldText(fields, 'heading')}</h2><p>${fieldText(fields, ['body', 'description'])}</p>`));
     stack.append(article);

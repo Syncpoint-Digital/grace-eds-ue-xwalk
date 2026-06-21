@@ -9,7 +9,9 @@ import {
 export default function decorate(block) {
   const fields = blockFields(block);
   const image = fieldImage(fields, ['image', 'backgroundImage', 'backgroundMedia']);
-  const heading = fieldText(fields, 'heading', 'Products');
+  const heading = fieldText(fields, 'heading');
+  const eyebrow = fieldText(fields, 'eyebrow');
+  const summary = fieldText(fields, ['summary', 'body', 'description']);
   const section = makeEl('section', 'grace-product-hero grace-scroll-block');
   instrument(block, section);
   if (image.src) section.style.backgroundImage = `url("${image.src}")`;
@@ -22,9 +24,9 @@ export default function decorate(block) {
         <span>${heading}</span>
       </nav>
       <div class="grace-product-hero__copy">
-        <span>${fieldText(fields, 'eyebrow', 'Products')}</span>
-        <h1>${heading}</h1>
-        <p>${fieldText(fields, ['summary', 'body', 'description'])}</p>
+        ${eyebrow ? `<span>${eyebrow}</span>` : ''}
+        ${heading ? `<h1>${heading}</h1>` : ''}
+        ${summary ? `<p>${summary}</p>` : ''}
       </div>
     </div>
   `;
