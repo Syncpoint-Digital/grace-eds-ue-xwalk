@@ -4,22 +4,34 @@ import {
   fieldLink,
   fieldText,
   finalizeBlock,
+  findImage,
+  findLink,
   instrument,
   makeButton,
   makeEl,
+  rows,
+  textContent,
 } from '../../scripts/grace-utils.js';
 
 export default function decorate(block) {
   const fields = blockFields(block);
-  const image = fieldImage(
+  const authoredRows = rows(block);
+  const rowCells = authoredRows.map((row) => row.children[0]).filter(Boolean);
+  const fieldImageValue = fieldImage(
     fields,
     ['image', 'backgroundImage', 'backgroundMedia'],
   );
-  const cta = fieldLink(fields, ['ctaLabel', 'linkText', 'buttonText'], ['ctaHref', 'link', 'href'], {
+  const image = fieldImageValue.src ? fieldImageValue : findImage(rowCells[0]);
+  const fieldCta = fieldLink(fields, ['ctaLabel', 'linkText', 'buttonText'], ['ctaHref', 'link', 'href'], {
     href: '',
     label: '',
   });
-  const heading = fieldText(fields, ['heading', 'title']);
+  const rowLink = findLink(rowCells[3]);
+  const cta = {
+    href: fieldCta.href || rowLink.href || '',
+    label: fieldCta.label || textContent(rowCells[2]),
+  };
+  const heading = fieldText(fields, ['heading', 'title']) || textContent(rowCells[1]);
 
   const section = makeEl('section', 'grace-hero grace-scroll-block');
   instrument(block, section);
