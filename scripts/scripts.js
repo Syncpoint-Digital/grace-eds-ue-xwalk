@@ -63,11 +63,81 @@ async function loadFonts() {
  */
 function buildAutoBlocks() {
   try {
-    // TODO: add auto block, if needed
+    // Grace uses explicit Universal Editor blocks. Global header/footer are loaded by EDS.
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
   }
+}
+
+function initGraceInteractions() {
+  const root = document.documentElement;
+  const revealItems = Array.from(document.querySelectorAll('.grace-reveal'));
+  root.classList.add('grace-has-reveal');
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      rootMargin: '0px 0px -12% 0px',
+      threshold: 0.14,
+    });
+
+    revealItems.forEach((item) => observer.observe(item));
+  } else {
+    revealItems.forEach((item) => item.classList.add('is-visible'));
+  }
+
+  const updateHeader = () => {
+    const header = document.querySelector('.grace-header');
+    if (!header) return;
+    header.classList.toggle('grace-header--top', window.scrollY < 12);
+    header.classList.toggle('grace-header--scrolled', window.scrollY >= 12);
+  };
+  updateHeader();
+  window.addEventListener('scroll', updateHeader, { passive: true });
+
+  const stopVideo = (modal) => {
+    const frame = modal?.querySelector('iframe');
+    if (frame) frame.setAttribute('src', '');
+  };
+
+  const closeModal = (modal) => {
+    if (!modal) return;
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    stopVideo(modal);
+    document.body.classList.remove('grace-modal-open');
+  };
+
+  document.addEventListener('click', (event) => {
+    const openButton = event.target.closest('[data-grace-video-open]');
+    if (openButton) {
+      const modal = document.getElementById(openButton.getAttribute('data-grace-video-open'));
+      const frame = modal?.querySelector('iframe');
+      if (!modal || !frame) return;
+
+      frame.setAttribute('src', openButton.getAttribute('data-grace-video-src'));
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('grace-modal-open');
+      modal.querySelector('[data-grace-video-close]')?.focus();
+    }
+
+    const closeButton = event.target.closest('[data-grace-video-close]');
+    if (closeButton) closeModal(closeButton.closest('.grace-video-modal'));
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closeModal(document.querySelector('.grace-video-modal.is-open'));
+    }
+  });
 }
 
 /**
@@ -161,6 +231,7 @@ async function loadLazy(doc) {
   if (hash && element) element.scrollIntoView();
 
   loadFooter(doc.querySelector('footer'));
+  initGraceInteractions();
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();

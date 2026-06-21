@@ -1,31 +1,34 @@
-# Your Project's Title...
-Your project's description...
+# Grace EDS XWalk
+
+Grace site implementation for Adobe Experience Manager Edge Delivery Services with AEM authoring and Universal Editor.
 
 ## Environments
-- Preview: https://main--{repo}--{owner}.aem.page/
-- Live: https://main--{repo}--{owner}.aem.live/
 
-## Documentation
+- Preview: `https://main--grace-eds-ue-xwalk--syncpoint-digital.aem.page/`
+- Live: `https://main--grace-eds-ue-xwalk--syncpoint-digital.aem.live/`
 
-Before using the aem-boilerplate, we recommend you to go through the documentation on [www.aem.live](https://www.aem.live/docs/), more specifically:
-1. [AEM Authoring](https://www.aem.live/docs/aem-authoring)
-2. [Universal Editor Tutorial](https://www.aem.live/developer/ue-tutorial)
-3. [Component Model Definitions](https://www.aem.live/developer/component-model-definitions)
-4. [Authoring Path Mapping](https://www.aem.live/developer/authoring-path-mapping)
+Universal Editor authoring is connected to:
 
-## Prerequisites
+- AEM author: `https://author-p144686-e1553198.adobeaemcloud.com/ui#/aem/sites.html/content/grace-eds-ue-xwalk`
+- Git remote should be configured as `git@github.com:Syncpoint-Digital/grace-eds-ue-xwalk.git`
 
-- nodejs 20 or newer
-- AEM Cloud Service release 2026.4 or newer
-
-## Installation
+## Development
 
 ```sh
-npm i
-```
-
-## Linting
-
-```sh
+npm install
+npm run build:json
 npm run lint
+npx @adobe/aem-cli up --port 3000
 ```
+
+## Content Migration
+
+Universal Editor block models are defined through `blocks/grace-models/_grace.json` and generated into:
+
+- `component-definition.json`
+- `component-models.json`
+- `component-filters.json`
+
+The Grace visual system is ported from `grace-payload` into `styles/grace-payload.css`, with EDS-specific overrides in `styles/styles.css`.
+
+Use `content-seeds/grace-pages.json` as the Universal Editor authoring/import checklist for the known Payload page set.

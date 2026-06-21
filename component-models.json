@@ -136,6 +136,14 @@
           {
             "name": "Highlight",
             "value": "highlight"
+          },
+          {
+            "name": "Grace Dark",
+            "value": "grace-dark"
+          },
+          {
+            "name": "Grace Surface",
+            "value": "grace-surface"
           }
         ]
       }
@@ -186,6 +194,398 @@
         "component": "aem-content",
         "name": "reference",
         "label": "Reference"
+      }
+    ]
+  },
+  {
+    "id": "hero",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Background Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "heading",
+        "label": "Heading"
+      },
+      {
+        "component": "text",
+        "name": "ctaLabel",
+        "label": "CTA Label"
+      },
+      {
+        "component": "aem-content",
+        "name": "ctaHref",
+        "label": "CTA Link"
+      }
+    ]
+  },
+  {
+    "id": "promo",
+    "fields": [
+      {
+        "component": "text",
+        "name": "eyebrow",
+        "label": "Eyebrow"
+      },
+      {
+        "component": "richtext",
+        "name": "body",
+        "label": "Body",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "ctaLabel",
+        "label": "CTA Label"
+      },
+      {
+        "component": "aem-content",
+        "name": "ctaHref",
+        "label": "CTA Link"
+      }
+    ]
+  },
+  {
+    "id": "video-feature",
+    "fields": [
+      {
+        "component": "text",
+        "name": "eyebrow",
+        "label": "Eyebrow"
+      },
+      {
+        "component": "text",
+        "name": "heading",
+        "label": "Heading"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Poster Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "videoUrl",
+        "label": "Video URL"
+      }
+    ]
+  },
+  {
+    "id": "page-hero",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Background Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "eyebrow",
+        "label": "Eyebrow"
+      },
+      {
+        "component": "text",
+        "name": "heading",
+        "label": "Heading"
+      },
+      {
+        "component": "richtext",
+        "name": "summary",
+        "label": "Summary",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "product-hero",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Background Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "eyebrow",
+        "label": "Eyebrow"
+      },
+      {
+        "component": "text",
+        "name": "heading",
+        "label": "Heading"
+      },
+      {
+        "component": "richtext",
+        "name": "summary",
+        "label": "Summary",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "product-cards",
+    "fields": [
+      {
+        "component": "text",
+        "name": "heading",
+        "label": "Heading"
+      },
+      {
+        "component": "richtext",
+        "name": "items",
+        "label": "Rows: image, title, description, link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "feature-callouts",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "items",
+        "label": "Rows: image, body, CTA label, CTA link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "industry-grid",
+    "fields": [
+      {
+        "component": "text",
+        "name": "heading",
+        "label": "Heading"
+      },
+      {
+        "component": "richtext",
+        "name": "items",
+        "label": "Rows: image, title, link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "ctaLabel",
+        "label": "CTA Label"
+      },
+      {
+        "component": "aem-content",
+        "name": "ctaHref",
+        "label": "CTA Link"
+      }
+    ]
+  },
+  {
+    "id": "insights",
+    "fields": [
+      {
+        "component": "text",
+        "name": "heading",
+        "label": "Heading"
+      },
+      {
+        "component": "richtext",
+        "name": "items",
+        "label": "Rows: image, category, title, link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "ctaLabel",
+        "label": "CTA Label"
+      },
+      {
+        "component": "aem-content",
+        "name": "ctaHref",
+        "label": "CTA Link"
+      }
+    ]
+  },
+  {
+    "id": "product-family-nav",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "items",
+        "label": "Rows: label, link, active",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "section-nav",
+    "fields": [
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Accessible Label"
+      },
+      {
+        "component": "richtext",
+        "name": "items",
+        "label": "Rows: label, link, active",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "product-overview",
+    "fields": [
+      {
+        "component": "text",
+        "name": "heading",
+        "label": "Heading"
+      },
+      {
+        "component": "richtext",
+        "name": "body",
+        "label": "Body",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "product-link-list",
+    "fields": [
+      {
+        "component": "text",
+        "name": "heading",
+        "label": "Heading"
+      },
+      {
+        "component": "richtext",
+        "name": "groups",
+        "label": "Rows: group rows and link rows",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "content-sections",
+    "fields": [
+      {
+        "component": "text",
+        "name": "heading",
+        "label": "Fallback Heading"
+      },
+      {
+        "component": "richtext",
+        "name": "sections",
+        "label": "Rows: image, eyebrow, heading, body, CTA label, CTA link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "about-hub-grid",
+    "fields": [
+      {
+        "component": "text",
+        "name": "heading",
+        "label": "Heading"
+      },
+      {
+        "component": "richtext",
+        "name": "cards",
+        "label": "Rows: image, title, description, link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "people-grid",
+    "fields": [
+      {
+        "component": "text",
+        "name": "heading",
+        "label": "Heading"
+      },
+      {
+        "component": "richtext",
+        "name": "people",
+        "label": "Rows: image, name, title, link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "timeline",
+    "fields": [
+      {
+        "component": "text",
+        "name": "heading",
+        "label": "Heading"
+      },
+      {
+        "component": "richtext",
+        "name": "eras",
+        "label": "Rows: era rows and event rows",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "location-directory",
+    "fields": [
+      {
+        "component": "text",
+        "name": "heading",
+        "label": "Heading"
+      },
+      {
+        "component": "richtext",
+        "name": "locations",
+        "label": "Rows: image, region, name, address, phone",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "awards-archive",
+    "fields": [
+      {
+        "component": "text",
+        "name": "heading",
+        "label": "Heading"
+      },
+      {
+        "component": "richtext",
+        "name": "years",
+        "label": "Rows: year rows and award rows",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "rich-text-content",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "body",
+        "label": "Body",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "shared-content",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "body",
+        "label": "Body",
+        "valueType": "string"
       }
     ]
   },

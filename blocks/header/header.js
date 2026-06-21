@@ -1,171 +1,115 @@
-import { getMetadata } from '../../scripts/aem.js';
-import { loadFragment } from '../fragment/fragment.js';
-
-// media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
 
-function closeOnEscape(e) {
-  if (e.code === 'Escape') {
-    const nav = document.getElementById('nav');
-    const navSections = nav.querySelector('.nav-sections');
-    if (!navSections) return;
-    const navSectionExpanded = navSections.querySelector('[aria-expanded="true"]');
-    if (navSectionExpanded && isDesktop.matches) {
-      // eslint-disable-next-line no-use-before-define
-      toggleAllNavSections(navSections);
-      navSectionExpanded.focus();
-    } else if (!isDesktop.matches) {
-      // eslint-disable-next-line no-use-before-define
-      toggleMenu(nav, navSections);
-      nav.querySelector('button').focus();
-    }
-  }
+const navItems = [
+  {
+    label: 'Industries',
+    href: '/industries/',
+    primary: ['Refining Technologies', 'Chemical Processing', 'Plastics and Polymers', 'Coatings', 'General Industrial', 'Pharmaceutical Solutions', 'Nutraceutical Solutions', 'Agriculture', 'Personal Care', 'Food and Beverage', 'Biofuels'],
+    image: 'https://grace.scene7.com/is/image/grace/rt-refining-technologies-men-blue-jumpsuits-refinery',
+  },
+  {
+    label: 'Products',
+    href: '/products/',
+    primary: ['Adsorbents', 'Catalysts', 'Fine Chemicals', 'Synthetic Silicas'],
+    image: 'https://grace.scene7.com/is/image/grace/sc-chemicals-woman-lab-looking',
+  },
+  {
+    label: 'Resources',
+    href: '/resources/',
+    primary: ['Insights', 'Product Stewardship', 'Quality Management', 'Catalagram Archive', 'Contact Resources'],
+    image: 'https://grace.scene7.com/is/image/grace/blog-hero-scientist-lab-looking-tablet',
+  },
+  {
+    label: 'People and Careers',
+    href: '/people-and-careers/',
+    primary: ['Careers', 'Life at Grace', 'Open Jobs', 'Ethics Hotline', 'LinkedIn'],
+    image: 'https://grace.scene7.com/is/image/grace/Grace_Employees_680x300?qlt=85&dpr=off',
+  },
+  {
+    label: 'About Grace',
+    href: '/about-grace/',
+    primary: ['This is Grace', 'Leadership Team', 'Sustainability', 'Locations', 'Awards and Recognition', 'Community', 'History'],
+    image: 'https://grace.scene7.com/is/image/grace/blog-hero-south-haven-laboratory-two-women',
+  },
+  { label: 'Contact Us', href: '/contact-us/' },
+];
+
+function slug(label) {
+  return label.toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
-function closeOnFocusLost(e) {
-  const nav = e.currentTarget;
-  if (!nav.contains(e.relatedTarget)) {
-    const navSections = nav.querySelector('.nav-sections');
-    if (!navSections) return;
-    const navSectionExpanded = navSections.querySelector('[aria-expanded="true"]');
-    if (navSectionExpanded && isDesktop.matches) {
-      // eslint-disable-next-line no-use-before-define
-      toggleAllNavSections(navSections, false);
-    } else if (!isDesktop.matches) {
-      // eslint-disable-next-line no-use-before-define
-      toggleMenu(nav, navSections, false);
-    }
-  }
-}
-
-function openOnKeydown(e) {
-  const focused = document.activeElement;
-  const isNavDrop = focused.className === 'nav-drop';
-  if (isNavDrop && (e.code === 'Enter' || e.code === 'Space')) {
-    const dropExpanded = focused.getAttribute('aria-expanded') === 'true';
-    // eslint-disable-next-line no-use-before-define
-    toggleAllNavSections(focused.closest('.nav-sections'));
-    focused.setAttribute('aria-expanded', dropExpanded ? 'false' : 'true');
-  }
-}
-
-function focusNavSection() {
-  document.activeElement.addEventListener('keydown', openOnKeydown);
-}
-
-/**
- * Toggles all nav sections
- * @param {Element} sections The container element
- * @param {Boolean} expanded Whether the element should be expanded or collapsed
- */
-function toggleAllNavSections(sections, expanded = false) {
-  if (!sections) return;
-  sections.querySelectorAll('.nav-sections .default-content-wrapper > ul > li').forEach((section) => {
-    section.setAttribute('aria-expanded', expanded);
-  });
-}
-
-/**
- * Toggles the entire nav
- * @param {Element} nav The container element
- * @param {Element} navSections The nav sections within the container element
- * @param {*} forceExpanded Optional param to force nav expand behavior when not null
- */
-function toggleMenu(nav, navSections, forceExpanded = null) {
-  const expanded = forceExpanded !== null ? !forceExpanded : nav.getAttribute('aria-expanded') === 'true';
-  const button = nav.querySelector('.nav-hamburger button');
-  document.body.style.overflowY = (expanded || isDesktop.matches) ? '' : 'hidden';
-  nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-  toggleAllNavSections(navSections, expanded || isDesktop.matches ? 'false' : 'true');
-  button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
-  // enable nav dropdown keyboard accessibility
-  if (navSections) {
-    const navDrops = navSections.querySelectorAll('.nav-drop');
-    if (isDesktop.matches) {
-      navDrops.forEach((drop) => {
-        if (!drop.hasAttribute('tabindex')) {
-          drop.setAttribute('tabindex', 0);
-          drop.addEventListener('focus', focusNavSection);
-        }
-      });
-    } else {
-      navDrops.forEach((drop) => {
-        drop.removeAttribute('tabindex');
-        drop.removeEventListener('focus', focusNavSection);
-      });
-    }
-  }
-
-  // enable menu collapse on escape keypress
-  if (!expanded || isDesktop.matches) {
-    // collapse menu on escape press
-    window.addEventListener('keydown', closeOnEscape);
-    // collapse menu on focus lost
-    nav.addEventListener('focusout', closeOnFocusLost);
-  } else {
-    window.removeEventListener('keydown', closeOnEscape);
-    nav.removeEventListener('focusout', closeOnFocusLost);
-  }
-}
-
-/**
- * loads and decorates the header, mainly the nav
- * @param {Element} block The header block element
- */
 export default async function decorate(block) {
-  // load nav as fragment
-  const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
-  const fragment = await loadFragment(navPath);
-
-  // decorate nav DOM
   block.textContent = '';
-  const nav = document.createElement('nav');
-  nav.id = 'nav';
-  while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
+  const header = document.createElement('div');
+  header.className = 'grace-header grace-header--top';
 
-  const classes = ['brand', 'sections', 'tools'];
-  classes.forEach((c, i) => {
-    const section = nav.children[i];
-    if (section) section.classList.add(`nav-${c}`);
+  header.innerHTML = `
+    <div class="grace-header__utility"><a href="/contact-us/">Contact Us</a></div>
+    <div class="grace-header__main">
+      <a class="grace-header__logo" href="/" aria-label="Grace home">
+        <img src="/grace-logo-color.png" alt="Grace">
+      </a>
+      <button class="grace-header__menu" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="grace-nav">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="grace-nav" class="grace-header__nav" aria-label="Primary navigation"></nav>
+    </div>
+  `;
+
+  const nav = header.querySelector('.grace-header__nav');
+  navItems.forEach((item) => {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'grace-header__nav-item';
+    const children = item.primary || [];
+    wrapper.innerHTML = `
+      <a class="grace-header__nav-link" href="${item.href}">${item.label}</a>
+      ${children.length ? `
+        <div class="grace-mega">
+          <div class="grace-mega__inner">
+            <div class="grace-mega__intro">
+              <span>Explore</span>
+              <h2>${item.label}</h2>
+              <a href="${item.href}">View overview</a>
+            </div>
+            <div class="grace-mega__primary">
+              ${children.slice(0, 8).map((label) => `<a href="${item.href}${slug(label)}/">${label} <span aria-hidden="true">&rsaquo;</span></a>`).join('')}
+            </div>
+            <div class="grace-mega__groups">
+              <section>
+                <h3>Featured</h3>
+                ${children.slice(0, 4).map((label) => `<a href="${item.href}${slug(label)}/">${label}</a>`).join('')}
+              </section>
+              <section>
+                <h3>More</h3>
+                ${children.slice(4, 8).map((label) => `<a href="${item.href}${slug(label)}/">${label}</a>`).join('')}
+              </section>
+            </div>
+            <a class="grace-mega__feature" href="${item.href}">
+              <img src="${item.image}" alt="">
+              <span>Explore ${item.label}</span>
+              <p>Find Grace expertise, solutions, and resources.</p>
+              <strong>Learn more</strong>
+            </a>
+          </div>
+        </div>` : ''}
+    `;
+    nav.append(wrapper);
   });
 
-  const navBrand = nav.querySelector('.nav-brand');
-  const brandLink = navBrand.querySelector('.button');
-  if (brandLink) {
-    brandLink.className = '';
-    brandLink.closest('.button-container').className = '';
-  }
+  const button = header.querySelector('.grace-header__menu');
+  const syncMenu = () => {
+    if (isDesktop.matches) {
+      nav.classList.remove('is-open');
+      button.setAttribute('aria-expanded', 'false');
+    }
+  };
+  button.addEventListener('click', () => {
+    const open = button.getAttribute('aria-expanded') === 'true';
+    button.setAttribute('aria-expanded', open ? 'false' : 'true');
+    button.setAttribute('aria-label', open ? 'Open navigation' : 'Close navigation');
+    nav.classList.toggle('is-open', !open);
+  });
+  isDesktop.addEventListener('change', syncMenu);
 
-  const navSections = nav.querySelector('.nav-sections');
-  if (navSections) {
-    navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
-      if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
-      navSection.addEventListener('click', () => {
-        if (isDesktop.matches) {
-          const expanded = navSection.getAttribute('aria-expanded') === 'true';
-          toggleAllNavSections(navSections);
-          navSection.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-        }
-      });
-    });
-  }
-
-  // hamburger for mobile
-  const hamburger = document.createElement('div');
-  hamburger.classList.add('nav-hamburger');
-  hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">
-      <span class="nav-hamburger-icon"></span>
-    </button>`;
-  hamburger.addEventListener('click', () => toggleMenu(nav, navSections));
-  nav.prepend(hamburger);
-  nav.setAttribute('aria-expanded', 'false');
-  // prevent mobile nav behavior on window resize
-  toggleMenu(nav, navSections, isDesktop.matches);
-  isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
-
-  const navWrapper = document.createElement('div');
-  navWrapper.className = 'nav-wrapper';
-  navWrapper.append(nav);
-  block.append(navWrapper);
+  block.append(header);
 }

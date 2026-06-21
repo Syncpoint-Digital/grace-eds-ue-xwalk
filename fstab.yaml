@@ -1,5 +1,5 @@
 mountpoints:
   /:
-    url: "https://author-p144686-e1553198.adobeaemcloud.com/bin/franklin.delivery/Syncpoint-Digital/grace-eds-ue-xwalk/main"
+    url: "https://author-p144686-e1553198.adobeaemcloud.com/bin/franklin.delivery/syncpoint-digital/grace-eds-ue-xwalk/main"
     type: "markup"
     suffix: ".html"

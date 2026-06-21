@@ -1,0 +1,82 @@
+{
+  "source": "../grace-payload/src/data",
+  "pages": [
+    { "title": "Home", "path": "/" },
+    { "title": "Adsorbents", "path": "/products/adsorbents/" },
+    { "title": "Catalysts", "path": "/products/catalysts/" },
+    { "title": "Fine Chemicals", "path": "/products/fine-chemicals/" },
+    { "title": "Synthetic Silicas", "path": "/products/synthetic-silicas/" },
+    { "title": "Insights", "path": "/insights/" },
+    { "title": "About Grace", "path": "/about-grace/" },
+    { "title": "This is Grace", "path": "/about-grace/this-is-grace/" },
+    { "title": "Leadership Team", "path": "/about-grace/leadership-team/" },
+    { "title": "Ed Sparks", "path": "/about-grace/leadership-team/ed-sparks/" },
+    { "title": "Ed Baiden", "path": "/about-grace/leadership-team/ed-baiden/" },
+    { "title": "Michael Brown", "path": "/about-grace/leadership-team/michael-brown/" },
+    { "title": "Mark Cluff", "path": "/about-grace/leadership-team/mark-cluff/" },
+    { "title": "Thomas DeMan", "path": "/about-grace/leadership-team/thomas-deman/" },
+    { "title": "Brenda Kelly", "path": "/about-grace/leadership-team/brenda-kelly/" },
+    { "title": "Jeff Sherman", "path": "/about-grace/leadership-team/jeff-sherman/" },
+    { "title": "Kerrie L. Wolfe", "path": "/about-grace/leadership-team/kerrie-l-wolfe/" },
+    { "title": "Anthony Yoo", "path": "/about-grace/leadership-team/anthony-yoo/" },
+    { "title": "Sustainability", "path": "/about-grace/sustainability/" },
+    { "title": "Locations", "path": "/about-grace/locations/" },
+    { "title": "Awards and Recognition", "path": "/about-grace/awards-and-recognition/" },
+    { "title": "Community", "path": "/about-grace/community/" },
+    { "title": "Environmental, Health and Safety", "path": "/about-grace/environmental-health-and-safety/" },
+    { "title": "Our History", "path": "/about-grace/our-history/" }
+  ],
+  "home": {
+    "blocks": [
+      {
+        "name": "Hero",
+        "fields": {
+          "image": "https://grace.com/content/dam/grace-site/english/hero/home/homepage-option-7-one-grace.jpg",
+          "heading": "It's not just about science - it's about people.",
+          "ctaLabel": "Discover Innovative Solutions",
+          "ctaHref": "/products/"
+        }
+      },
+      {
+        "name": "Promo",
+        "fields": {
+          "body": "A global leader in specialty chemicals, Grace produces high-performance chemicals and science-based solutions that enable industries to enhance modern life.",
+          "ctaLabel": "Learn about Grace",
+          "ctaHref": "/about-grace/"
+        }
+      },
+      {
+        "name": "Product Cards",
+        "rowShape": ["image", "title", "description", "href"],
+        "rows": [
+          ["https://grace.com/content/dam/grace-site/english/hero/materials-technologies/mt-adsorbents-employee-FINAL-3000x1360.jpg", "Adsorbents", "Purify your processes with precision.", "/products/adsorbents/"],
+          ["https://grace.com/content/dam/grace-site/english/hero/specialty-catalysts/sc_catalysts_employee.jpg", "Catalysts", "Power your performance at scale.", "/products/catalysts/"],
+          ["https://grace.scene7.com/is/image/grace/sc-chemicals-woman-lab-looking", "Fine Chemicals", "Advance your molecule to market.", "/products/fine-chemicals/"],
+          ["https://grace.com/content/dam/grace-site/english/hero/materials-technologies/mt-synthetic-silicas-worms-employee.jpg", "Synthetic Silicas", "Enhance your products and productivity.", "/products/synthetic-silicas/"]
+        ]
+      },
+      {
+        "name": "Feature Callouts",
+        "rowShape": ["image", "body", "ctaLabel", "ctaHref"]
+      },
+      {
+        "name": "Industry Grid",
+        "rowShape": ["image", "title", "href"]
+      },
+      {
+        "name": "Video Feature",
+        "fields": {
+          "eyebrow": "We Are Grace",
+          "heading": "Where innovation meets opportunity.",
+          "ctaLabel": "Watch the video",
+          "image": "https://grace.com/content/dam/grace-site/english/video-still/Video-Still-We-Are-Grace.jpg",
+          "videoUrl": "https://youtu.be/n1hZEU19AfI"
+        }
+      },
+      {
+        "name": "Insights",
+        "rowShape": ["image", "category", "title", "href"]
+      }
+    ]
+  }
+}

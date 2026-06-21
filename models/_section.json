@@ -30,12 +30,20 @@
           "name": "style",
           "label": "Style",
           "options": [
-            {
-              "name": "Highlight",
-              "value": "highlight"
-            }
-          ]
-        }
+          {
+            "name": "Highlight",
+            "value": "highlight"
+          },
+          {
+            "name": "Grace Dark",
+            "value": "grace-dark"
+          },
+          {
+            "name": "Grace Surface",
+            "value": "grace-surface"
+          }
+        ]
+      }
       ]
     }
   ],
@@ -44,14 +52,34 @@
       "id": "section",
       "components": [
         "text",
-        "image",
-        "button",
-        "title",
-        "hero",
-        "cards",
-        "columns",
-        "fragment"
-      ]
-    }
-  ]
+      "image",
+      "button",
+      "title",
+      "hero",
+      "promo",
+      "product-cards",
+      "feature-callouts",
+      "industry-grid",
+      "video-feature",
+      "insights",
+      "product-hero",
+      "page-hero",
+      "product-family-nav",
+      "section-nav",
+      "product-overview",
+      "product-link-list",
+      "content-sections",
+      "about-hub-grid",
+      "people-grid",
+      "timeline",
+      "location-directory",
+      "awards-archive",
+      "rich-text-content",
+      "shared-content",
+      "cards",
+      "columns",
+      "fragment"
+    ]
+  }
+]
 }

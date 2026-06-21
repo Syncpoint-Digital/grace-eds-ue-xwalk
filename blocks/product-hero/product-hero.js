@@ -1,0 +1,32 @@
+import {
+  blockFields,
+  fieldImage,
+  fieldText,
+  instrument,
+  makeEl,
+} from '../../scripts/grace-utils.js';
+
+export default function decorate(block) {
+  const fields = blockFields(block);
+  const image = fieldImage(fields, ['image', 'backgroundImage', 'backgroundMedia']);
+  const heading = fieldText(fields, 'heading', 'Products');
+  const section = makeEl('section', 'grace-product-hero grace-scroll-block');
+  instrument(block, section);
+  if (image.src) section.style.backgroundImage = `url("${image.src}")`;
+  section.innerHTML = `
+    <div class="grace-product-hero__shade"></div>
+    <div class="grace-container grace-product-hero__inner">
+      <nav aria-label="Breadcrumb" class="grace-product-hero__breadcrumbs">
+        <a href="/">Home</a>
+        <a href="/products/">Products</a>
+        <span>${heading}</span>
+      </nav>
+      <div class="grace-product-hero__copy">
+        <span>${fieldText(fields, 'eyebrow', 'Products')}</span>
+        <h1>${heading}</h1>
+        <p>${fieldText(fields, ['summary', 'body', 'description'])}</p>
+      </div>
+    </div>
+  `;
+  block.replaceWith(section);
+}
