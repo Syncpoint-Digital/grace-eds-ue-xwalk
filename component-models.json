@@ -340,23 +340,66 @@
         "component": "text",
         "name": "heading",
         "label": "Heading"
+      }
+    ]
+  },
+  {
+    "id": "product-card",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title"
       },
       {
         "component": "richtext",
-        "name": "items",
-        "label": "Rows: image, title, description, link",
+        "name": "description",
+        "label": "Description",
         "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link"
       }
     ]
   },
   {
     "id": "feature-callouts",
+    "fields": []
+  },
+  {
+    "id": "feature-callout",
     "fields": [
       {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
         "component": "richtext",
-        "name": "items",
-        "label": "Rows: image, body, CTA label, CTA link",
+        "name": "body",
+        "label": "Body",
         "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "ctaLabel",
+        "label": "CTA Label"
+      },
+      {
+        "component": "aem-content",
+        "name": "ctaHref",
+        "label": "CTA Link"
       }
     ]
   },
@@ -369,10 +412,46 @@
         "label": "Heading"
       },
       {
-        "component": "richtext",
-        "name": "items",
-        "label": "Rows: image, title, link",
-        "valueType": "string"
+        "component": "text",
+        "name": "ctaLabel",
+        "label": "CTA Label"
+      },
+      {
+        "component": "aem-content",
+        "name": "ctaHref",
+        "label": "CTA Link"
+      }
+    ]
+  },
+  {
+    "id": "industry-item",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title"
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link"
+      }
+    ]
+  },
+  {
+    "id": "insights",
+    "fields": [
+      {
+        "component": "text",
+        "name": "heading",
+        "label": "Heading"
       },
       {
         "component": "text",
@@ -387,28 +466,29 @@
     ]
   },
   {
-    "id": "insights",
+    "id": "insight-item",
     "fields": [
       {
-        "component": "text",
-        "name": "heading",
-        "label": "Heading"
-      },
-      {
-        "component": "richtext",
-        "name": "items",
-        "label": "Rows: image, category, title, link",
-        "valueType": "string"
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
       },
       {
         "component": "text",
-        "name": "ctaLabel",
-        "label": "CTA Label"
+        "name": "category",
+        "label": "Category"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title"
       },
       {
         "component": "aem-content",
-        "name": "ctaHref",
-        "label": "CTA Link"
+        "name": "link",
+        "label": "Link"
       }
     ]
   },

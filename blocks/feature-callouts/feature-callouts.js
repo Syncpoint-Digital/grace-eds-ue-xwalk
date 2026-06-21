@@ -1,4 +1,8 @@
 import {
+  blockFields,
+  fieldHtml,
+  fieldImage,
+  fieldLink,
   finalizeBlock,
   instrument,
   makeEl,
@@ -14,6 +18,23 @@ export default function decorate(block) {
   const grid = makeEl('div', 'grace-container grace-callouts__grid');
 
   rows(block).forEach((row) => {
+    const itemFields = blockFields(row);
+    if (Object.keys(itemFields).length) {
+      const image = fieldImage(itemFields, 'image');
+      const body = fieldHtml(itemFields, 'body');
+      const cta = fieldLink(itemFields, ['ctaLabel'], ['ctaHref']);
+      if (!image.src && !body && !cta.label) return;
+      const article = makeEl('article', 'grace-callout grace-reveal');
+      const img = makeImage(image.src, image.alt);
+      if (img) article.append(img);
+      if (body) article.append(makeEl('p', '', body));
+      if (cta.label) {
+        article.insertAdjacentHTML('beforeend', `<a href="${cta.href || '/'}">${cta.label} <span aria-hidden="true">&rsaquo;</span></a>`);
+      }
+      grid.append(article);
+      return;
+    }
+
     const values = rowValues(row);
     if (values.length < 2 || !valuesHaveContent(values)) return;
     const article = makeEl('article', 'grace-callout grace-reveal');

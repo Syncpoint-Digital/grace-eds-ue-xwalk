@@ -100,10 +100,15 @@ export function fieldLink(fields, labelNames, hrefNames, fallback = {}) {
     .map(toKey)
     .map((key) => fields[key])
     .find(Boolean);
+  const hrefField = (Array.isArray(hrefNames) ? hrefNames : [hrefNames])
+    .map(toKey)
+    .map((key) => fields[key])
+    .find(Boolean);
   const authoredLink = linkedField ? findLink(linkedField) : {};
+  const authoredHref = hrefField ? findLink(hrefField) : {};
 
   return {
-    href: href || authoredLink.href || fallback.href || '',
+    href: href || authoredHref.href || authoredLink.href || fallback.href || '',
     label: label || authoredLink.label || fallback.label || '',
   };
 }

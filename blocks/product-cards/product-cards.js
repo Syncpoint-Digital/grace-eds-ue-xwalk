@@ -1,5 +1,8 @@
 import {
   blockFields,
+  fieldHtml,
+  fieldImage,
+  fieldLink,
   fieldText,
   finalizeBlock,
   instrument,
@@ -21,6 +24,23 @@ export default function decorate(block) {
   const authoredRows = rows(block, ['heading']);
 
   authoredRows.forEach((row) => {
+    const itemFields = blockFields(row);
+    if (Object.keys(itemFields).length) {
+      const image = fieldImage(itemFields, 'image');
+      const title = fieldText(itemFields, 'title');
+      const description = fieldHtml(itemFields, 'description');
+      const link = fieldLink(itemFields, ['title'], ['link']);
+      if (!image.src && !title && !description && !link.href) return;
+      const card = makeEl('a', 'grace-product grace-reveal');
+      card.href = link.href || '/';
+      const img = makeImage(image.src, image.alt);
+      if (img) card.append(img);
+      if (title) card.append(makeEl('h3', '', title));
+      if (description) card.append(makeEl('p', '', description));
+      grid.append(card);
+      return;
+    }
+
     const values = rowValues(row);
     if (values.length < 2 || !valuesHaveContent(values)) return;
     const card = makeEl('a', 'grace-product grace-reveal');

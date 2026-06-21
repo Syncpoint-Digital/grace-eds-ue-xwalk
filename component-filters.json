@@ -58,5 +58,29 @@
       "button",
       "title"
     ]
+  },
+  {
+    "id": "product-cards",
+    "components": [
+      "product-card"
+    ]
+  },
+  {
+    "id": "feature-callouts",
+    "components": [
+      "feature-callout"
+    ]
+  },
+  {
+    "id": "industry-grid",
+    "components": [
+      "industry-item"
+    ]
+  },
+  {
+    "id": "insights",
+    "components": [
+      "insight-item"
+    ]
   }
 ]

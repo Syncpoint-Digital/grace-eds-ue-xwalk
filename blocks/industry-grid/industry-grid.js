@@ -1,5 +1,6 @@
 import {
   blockFields,
+  fieldImage,
   fieldLink,
   fieldText,
   finalizeBlock,
@@ -22,6 +23,21 @@ export default function decorate(block) {
   const grid = makeEl('div', 'grace-industries__grid');
 
   rows(block, ['heading', 'ctaLabel', 'ctaHref']).forEach((row) => {
+    const itemFields = blockFields(row);
+    if (Object.keys(itemFields).length) {
+      const image = fieldImage(itemFields, 'image');
+      const title = fieldText(itemFields, 'title');
+      const linkValue = fieldLink(itemFields, ['title'], ['link']);
+      if (!image.src && !title && !linkValue.href) return;
+      const link = makeEl('a', 'grace-industry grace-reveal');
+      link.href = linkValue.href || '/';
+      const img = makeImage(image.src, image.alt);
+      if (img) link.append(img);
+      if (title) link.insertAdjacentHTML('beforeend', `<span>${title} <span aria-hidden="true">&rsaquo;</span></span>`);
+      grid.append(link);
+      return;
+    }
+
     const values = rowValues(row);
     if (values.length < 2 || !valuesHaveContent(values)) return;
     const link = makeEl('a', 'grace-industry grace-reveal');

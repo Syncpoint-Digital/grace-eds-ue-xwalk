@@ -1,5 +1,6 @@
 import {
   blockFields,
+  fieldImage,
   fieldLink,
   fieldText,
   finalizeBlock,
@@ -41,7 +42,22 @@ export default function decorate(block) {
   if (heading) container.append(makeEl('h2', '', heading));
   const layout = makeEl('div', 'grace-insights__layout');
   const items = rows(block, ['heading', 'ctaLabel', 'ctaHref'])
-    .map(rowValues)
+    .map((row) => {
+      const itemFields = blockFields(row);
+      if (Object.keys(itemFields).length) {
+        const image = fieldImage(itemFields, 'image');
+        const category = fieldText(itemFields, 'category');
+        const title = fieldText(itemFields, 'title');
+        const link = fieldLink(itemFields, ['title'], ['link']);
+        return [
+          { image, text: image.src, link: { href: '', label: '' } },
+          { image: { alt: '', src: '' }, text: category, link: { href: '', label: '' } },
+          { image: { alt: '', src: '' }, text: title, link: { href: '', label: '' } },
+          { image: { alt: '', src: '' }, text: link.href, link: { href: link.href, label: link.label } },
+        ];
+      }
+      return rowValues(row);
+    })
     .filter((values) => values.length >= 3 && valuesHaveContent(values));
   if (items[0]) layout.append(renderInsight(items[0], true));
   const list = makeEl('div', 'grace-insights__list');
