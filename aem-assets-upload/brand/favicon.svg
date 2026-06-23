@@ -1,0 +1,13 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="96" fill="#ffffff"/>
+  <text
+    x="50%"
+    y="53%"
+    fill="#78be20"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="390"
+    font-weight="700"
+    text-anchor="middle"
+    dominant-baseline="middle"
+  >G</text>
+</svg>
